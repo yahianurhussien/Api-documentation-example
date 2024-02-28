@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: Student API
+  description: Student enrolment api
+  contact:
+    email: yahia@gmail.com
+  version: 1.2.3
+  license:
+    name: yahia license
+    url: http://yahia
+servers:
+  - url: http:localhost:dev
+  - url: http:localhost:prod
+components:
+  schemas:
+    student:
+      type: object
+      properties:
+        studentId:
+          type: integer
+          example: 4
+        studentName:
+          type: string
+          example: John
+    students:
+      type: array
+      items:
+        properties:
+          studentId:
+            type: integer
+            example: 4
+          studentName:
+            type: string
+            example: John
+paths:
+  /student:
+    description: get all students
+    get:
+      parameters:
+        - in: query
+          name: studentName
+          required: true
+          schema:
+            type: string
+            example: Yahia
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/students'
+    post:
+      description: add a new student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/student'
+      responses:
+        201:
+          description: Record added successfully
+  /student/{id}:
+    description: "get student by id"
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: success response with path param
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/student'
+
+
+
+
+
+
+
+
+
+
+
+
+
